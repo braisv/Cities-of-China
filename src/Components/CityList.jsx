@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CheckedCities from "./CheckedCities";
 
 export default class CityList extends Component {
   constructor(props) {
@@ -6,8 +7,7 @@ export default class CityList extends Component {
     this.state = {
       cities: this.props.cities,
       search: "",
-      optionsChecked: [],
-      checked: {}
+      optionsChecked: []
     };
   }
 
@@ -45,23 +45,6 @@ export default class CityList extends Component {
     }
   }
 
-  removeAllSelected(e) {
-    e.preventDefault();
-    let checkboxes = document.getElementsByName("city");
-    let checkAll = document.getElementById("checkboxAll");
-
-    checkAll.checked = false;
-
-    for (let i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked === true) checkboxes[i].checked = false;
-    }
-
-    this.setState({
-      ...this.state,
-      optionsChecked: []
-    });
-  }
-
   checkOption(e) {
     let allCities = this.state.cities;
     let checkedArray = this.state.optionsChecked;
@@ -80,20 +63,10 @@ export default class CityList extends Component {
     }
   }
 
-  removeSelected(e, city) {
-    e.preventDefault();
-    let checkboxes = document.getElementsByName("city");
-    let checkAll = document.getElementById("checkboxAll");
-
-    checkAll.checked = false;
-
-    for (let i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].value === city) checkboxes[i].checked = false;
-    }
-
+  handler(param) {
     this.setState({
       ...this.state,
-      optionsChecked: this.state.optionsChecked.filter(e => e.id !== city)
+      optionsChecked: param
     });
   }
 
@@ -153,50 +126,10 @@ export default class CityList extends Component {
             ))}
           </ul>
         </div>
-        {
-          // ====== COMPONENT CHECKED CITIES =============
-        }
-        <div className="cityList checked">
-          <div className="checkAll border box clearAll">
-            <span className="selectedLength">
-              {" "}
-              {this.state.optionsChecked.length} items{" "}
-            </span>
-            <span
-              className="selectedClear"
-              onClick={e => this.removeAllSelected(e)}
-            >
-              CLEAR
-            </span>
-          </div>
-          <ul
-            className="border-bottom"
-            style={{ maxHeight: "90vh", overflowY: "scroll" }}
-          >
-            {this.state.optionsChecked.map(city => (
-              <li>
-                <div className="cityChecked">
-                  <img src="/images/icon.png" alt="icon" />
-                  <div>
-                    {city.name}
-                    <p>
-                      <span className="chineseName">{city.chineseName}</span>
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <span
-                    className="cross"
-                    onClick={e => this.removeSelected(e, city.id)}
-                  ></span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {
-          // ====== COMPONENT CHECKED CITIES =============
-        }
+        <CheckedCities
+          checked={this.state.optionsChecked}
+          handler={this.handler.bind(this)}
+        />
       </div>
     );
   }

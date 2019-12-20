@@ -107,8 +107,8 @@ export default class CityList extends Component {
               borderBottom: "none"
             }}
           >
-            {resultSearch.map(city => (
-              <li>
+            {resultSearch.map( (city, i) => (
+              <li key={i}>
                 <input
                   type="checkbox"
                   name="city"

@@ -65,8 +65,8 @@ export default class CheckedCities extends Component {
           className="border-bottom"
           style={{ maxHeight: "90vh", overflowY: "scroll" }}
         >
-          {this.state.optionsChecked.map(city => (
-            <li>
+          {this.state.optionsChecked.map( (city, i) => (
+            <li key={i}>
               <div className="cityChecked">
                 <img src="/images/icon.png" alt="icon" />
                 <div>

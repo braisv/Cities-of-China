@@ -1,23 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import NavBar from "./NavBar";
 import CityList from "./CityList";
-import cities from "../Utils/cities-of-china.json";
+import CheckedCities from "./CheckedCities";
+import { CityContextProvider } from "./CityContext"
 import "./App.css";
 
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      cities: cities.cities,
-    };
-  }
+const App = () => {
+  return (
+    <div>
+      <NavBar title="Cities of China" />
+      <CityContextProvider>
+        <CityList />
+        <CheckedCities />
+      </CityContextProvider>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div>
-        <NavBar title="Cities of China" />
-        <CityList cities={this.state.cities} />
-      </div>
-    );
-  }
-}
+export default App;
